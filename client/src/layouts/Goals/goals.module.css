@@ -1,0 +1,8 @@
+.boundrary {
+    width: calc(var(--vwMobile, 1vw) * 100);
+    max-width: 480px;
+    height: calc(var(--vhMobile, 1vh) * 100);
+    max-height: 896px;
+    background-color: rgb(24, 24, 24);
+    /* align-self: center; */
+}

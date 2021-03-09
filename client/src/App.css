@@ -1,0 +1,26 @@
+.maxHeight {
+  height: calc(var(--vhMobile, 1vh) * 100);
+}
+
+.maxWidth {
+  width: calc(var(--vwMobile, 1vw) * 100);
+}
+
+/* 
+====================================
+==================================== Flex ========================================== 
+====================================
+*/
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
