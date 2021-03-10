@@ -12,7 +12,9 @@
     "express": "^4.17.1",
     "gsap": "./gsap-bonus.tgz",
     "mongoose": "^5.11.19",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-auth0": "^1.4.0"
   },
   "scripts": {
     "start": "if-env NODE_ENV=production && yarn run start:prod || yarn run start:dev",

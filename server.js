@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 
 // Bring in the API Routes
 const apiRoutes = require("./backend/routes");
