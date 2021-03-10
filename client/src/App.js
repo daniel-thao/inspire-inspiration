@@ -1,17 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useRef } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthOProviderWithHistory from "./contexts/AuthOProviderWithHistory";
 import MediaQueryContext from "./contexts/MediaQueryContext";
+import ScrollContext from "./contexts/ScrollContext";
 import { PrivateRoute } from "./utils/PrivateRoutes";
 
-import Goals from "./layouts/Goals/Goals";
+import LayoutGoals from "./layouts/LayoutGoals/LayoutGoals";
 import Landing from "./layouts/Landing/Landing";
 
 function App() {
   //  for Media Query Context
   const [mediaQuery, setMediaQuery] = useState(window.innerWidth);
   const mediaQueryContextValue = { mediaQuery, setMediaQuery };
+
+  // for Scrollbar Context
+  const scrollPosition = useRef(0);
+  // const scrollContextValue = scrollPosition;
 
   let vhMobile = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vhMobile", `${vhMobile}px`);
@@ -26,12 +31,14 @@ function App() {
     <Router>
       <AuthOProviderWithHistory>
         <MediaQueryContext.Provider value={mediaQueryContextValue}>
-          <Switch>
-            <Route exact path="/">
-              <Landing></Landing>
-            </Route>
-            <PrivateRoute path="/goals" component={Goals}></PrivateRoute>
-          </Switch>
+          <ScrollContext.Provider value={scrollPosition}>
+            <Switch>
+              <Route exact path="/">
+                <Landing></Landing>
+              </Route>
+              <PrivateRoute path="/goals" component={LayoutGoals}></PrivateRoute>
+            </Switch>
+          </ScrollContext.Provider>
         </MediaQueryContext.Provider>
       </AuthOProviderWithHistory>
     </Router>

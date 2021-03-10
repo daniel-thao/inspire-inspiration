@@ -3,17 +3,24 @@ const router = require("express").Router();
 const db = require("../models");
 
 router.get("/", (req, res) => {
-  res.status(200).json({message: "Hey"});
+  res.status(200).json({ message: "Hey" });
 });
 
 router.put("/exists", (req, res) => {
-  console.log(`\n\n ${req.body.email} \n\n`);
+  // console.log(`\n\n ${req.body.email} \n\n`);
   db.Users.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       return res.send("User already exists");
     } else {
-      res.json(user);
+      res.send("created");
     }
+  });
+});
+
+router.put("/findOne", (req, res) => {
+  // console.log(`\n\n ${req.body.email} \n\n`);
+  db.Users.findOne({ email: req.body.email }).then((user) => {
+    res.json(user);
   });
 });
 

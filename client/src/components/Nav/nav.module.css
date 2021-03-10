@@ -1,0 +1,47 @@
+.container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(80, 87, 92);
+  height: fit-content;
+}
+
+.locationHelper {
+  background-color: khaki;
+  height: 100%;
+  width: 5em;
+  position: absolute;
+  border-radius: .3em;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.icons {
+  font-size: 2.5em;
+  z-index: 10;
+  color: rgb(241, 145, 0);
+  filter: drop-shadow(0em 0em 0.02em rgba(0, 0, 0, 1)) invert(0.1);
+  cursor: pointer;
+}
+
+.houseIcon {
+
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+  width: 5em;
+  padding: 1em 0em;
+  /* background-color: khaki; */
+  text-align: center;
+}
+
+.hide {
+  opacity: 0;
+  visibility: hidden;
+  width: 5em;
+}

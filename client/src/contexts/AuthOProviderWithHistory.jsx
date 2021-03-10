@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import axios from "axios";
 
 const Auth0ProviderWithHistory = ({ children }) => {
   const domain = "dev-b9sse9-f.us.auth0.com";
