@@ -14,10 +14,6 @@ function App() {
   const [mediaQuery, setMediaQuery] = useState(window.innerWidth);
   const mediaQueryContextValue = { mediaQuery, setMediaQuery };
 
-  // for Scrollbar Context
-  const scrollPosition = useRef(0);
-  // const scrollContextValue = scrollPosition;
-
   let vhMobile = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vhMobile", `${vhMobile}px`);
 
@@ -31,14 +27,12 @@ function App() {
     <Router>
       <AuthOProviderWithHistory>
         <MediaQueryContext.Provider value={mediaQueryContextValue}>
-          <ScrollContext.Provider value={scrollPosition}>
-            <Switch>
-              <Route exact path="/">
-                <Landing></Landing>
-              </Route>
-              <PrivateRoute path="/goals" component={LayoutGoals}></PrivateRoute>
-            </Switch>
-          </ScrollContext.Provider>
+          <Switch>
+            <Route exact path="/">
+              <Landing></Landing>
+            </Route>
+            <PrivateRoute path="/goals" component={LayoutGoals}></PrivateRoute>
+          </Switch>
         </MediaQueryContext.Provider>
       </AuthOProviderWithHistory>
     </Router>

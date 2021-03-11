@@ -13,14 +13,41 @@
   display: none;
 } */
 
+.pseudoScroll {
+  position: absolute;
+  top: 0;
+  right: 1%;
+  width: 0.5em;
+  background: rgb(0, 0, 0);
+  /* height: 33%; */
+  height: 2em;
+  opacity: 0.5;
+  z-index: 10;
+  border-radius: 1em;
+  margin: 5px 0px;
+}
+
+
+.introCard {
+  padding-bottom: 1em;
+}
+
 .userName {
-  color: aliceblue;
+  color: rgb(0, 0, 0);
   margin-top: 0.8em;
+  font-family: 'Quicksand', sans-serif;
+  font-family: 'Lato', sans-serif;
+  font-size: 2em;
+  /* font-family: 'Alegreya Sans SC', sans-serif; */
 }
 
 .todaysDate {
-  color: aliceblue;
+  color: rgb(0, 0, 0);
   margin-top: 0.6em;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.4em;
+  /* font-family: 'Alegreya Sans SC', sans-serif; */
+
 }
 
 .goalSection {
@@ -44,19 +71,4 @@
 .extraPadding {
   padding: 10em 0em;
   width: 100%;
-}
-
-
-.pseudoScroll {
-  position: absolute;
-  top: 0;
-  right: 1%;
-  width: 0.5em;
-  background: aliceblue;
-  /* height: 33%; */
-  height: 2em;
-  color: aliceblue;
-  opacity: 0.5;
-  z-index: 10;
-  border-radius: 1em;
 }

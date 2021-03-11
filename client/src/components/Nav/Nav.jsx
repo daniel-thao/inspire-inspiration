@@ -13,7 +13,11 @@ function Nav({ urlLocation, setUrlLocation }) {
   const refTwo = useRef();
   const refThree = useRef();
   useEffect(() => {
-    gsap.to(`.${CSS.locationHelper}`, { duration: 0, x: refTwo.current.offsetLeft });
+    console.log(refOne);
+    console.log(refTwo);
+    console.log(refThree);
+
+    // gsap.to(`.${CSS.locationHelper}`, { duration: 1, x: refTwo.current.offsetLeft });
   }, []);
 
   return (
@@ -28,7 +32,7 @@ function Nav({ urlLocation, setUrlLocation }) {
             gsap.to(`.${CSS.locationHelper}`, {
               duration: 0.5,
               ease: "circ.out",
-              x: refOne.current.offsetLeft,
+              x: refOne.current.offsetLeft - 152,
             });
           }}
         >
@@ -41,13 +45,13 @@ function Nav({ urlLocation, setUrlLocation }) {
           onClick={() => {
             switch (urlLocation) {
               case "home":
-                gsap.to(`.${CSS.locationHelper}`, { duration: 0, x: refTwo.current.offsetLeft });
+                gsap.to(`.${CSS.locationHelper}`, { duration: 0, x: refTwo.current.offsetLeft - 152 });
                 return setUrlLocation("addGoal");
               default:
                 gsap.to(`.${CSS.locationHelper}`, {
                   duration: 0.5,
                   ease: "circ.out",
-                  x: refTwo.current.offsetLeft,
+                  x: refTwo.current.offsetLeft - 152,
                 });
                 return setUrlLocation("home");
             }
@@ -67,7 +71,7 @@ function Nav({ urlLocation, setUrlLocation }) {
             gsap.to(`.${CSS.locationHelper}`, {
               duration: 0.5,
               ease: "circ.out",
-              x: refThree.current.offsetLeft,
+              x: refThree.current.offsetLeft - 152,
             });
           }}
         >

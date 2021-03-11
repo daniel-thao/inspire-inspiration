@@ -4,6 +4,7 @@
   height: calc(var(--vhMobile, 1vh) * 100);
   max-height: 700px;
   background-color: rgb(49, 53, 56);
+  background-color: rgb(223, 240, 255);
   /* align-self: center; */
   position: relative;
 }

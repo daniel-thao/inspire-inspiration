@@ -13,7 +13,7 @@ function CurrentGoals() {
   const { user } = useAuth0();
   const [goals, setGoals] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
-  // const scrollPosition = useContext(ScrollContext);
+  const [whichDescription, setWhichDescription] = useState("");
 
   async function checkAndPopulate() {
     const check = await axios
@@ -55,16 +55,12 @@ function CurrentGoals() {
   }, []);
 
   useEffect(() => {
-    gsap.to(`.${CSS.pseudoScroll}`, { top: `${scrollPosition /2.5 }%` });
+    gsap.to(`.${CSS.pseudoScroll}`, { top: `${scrollPosition / 2.02}%` });
   }, [scrollPosition]);
 
   return (
     <div className={CSS.container}>
       <div className={CSS.pseudoScroll}></div>
-      <div>
-        <h5 className={`${CSS.userName}`}>Hi {user.name}!</h5>
-        <h4 className={`${CSS.todaysDate}`}>{dayJS().format("MMM DD, YYYY")}</h4>
-      </div>
 
       <div
         className={`${CSS.goalSection}`}
@@ -72,17 +68,22 @@ function CurrentGoals() {
           const difference = e.target.scrollHeight - e.target.clientHeight;
           const position = e.target.scrollTop / difference;
           const botNum = Math.trunc(position * 100);
-          console.log(botNum);
 
           if (botNum === 1) {
             setScrollPosition(100);
-            // scrollPosition.current = 100;
           } else {
             setScrollPosition(botNum);
-            // scrollPosition.current = botNum;
           }
         }}
       >
+        <div className={`${CSS.introCard}`}>
+          <h5 className={`${CSS.userName}`}>Hi {user.name}!</h5>
+          <h4 className={`${CSS.todaysDate}`}>{dayJS().format("MMM DD, YYYY")}</h4>
+        </div>
+
+        <div className={`${whichDescription !== "" ? whichDescription : ""}`}>
+          {whichDescription}
+        </div>
         {goals.map((index) => (
           <Goal
             key={index[0].systemDate}
@@ -90,11 +91,13 @@ function CurrentGoals() {
             title={index[0].title}
             isChecked={index[0].checked}
             tag={index[0].tag}
+            description={index[0].description}
+            setWhichDescription={setWhichDescription}
           ></Goal>
         ))}
         <div className={CSS.extraPadding}></div>
       </div>
-      <div className={CSS.extraSpace}></div>
+      {/* <div className={CSS.extraSpace}></div> */}
     </div>
   );
 }
