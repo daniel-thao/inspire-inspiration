@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
@@ -12,6 +12,8 @@ import Nav from "../../components/Nav/Nav";
 import CSS from "./layout.module.css";
 import "../../App.css";
 
+import MediaQueryContext from "../../contexts/MediaQueryContext";
+
 function LayoutGoals() {
   const { logout } = useAuth0();
   const [urlLocation, setUrlLocation] = useState(
@@ -21,14 +23,15 @@ function LayoutGoals() {
       ? "addGoals"
       : "home"
   );
+  const {mediaQuery} = useContext(MediaQueryContext);
 
   return (
-    <div className={`maxWidth flexRow justifyCenter scrollHidden`}>
+    <div className={`maxWidth flexColumn positionRelative positionCenter justifyCenter scrollHidden`}>
       <div className={`${CSS.boundrary}`}>
         <Video></Video>
         <div className={CSS.container}>
           {urlLocation === "home" ? (
-            <CurrentGoals className={CSS.container}></CurrentGoals>
+            <CurrentGoals urlLocation={urlLocation}></CurrentGoals>
           ) : urlLocation === "addGoal" ? (
             <AddGoals setUrlLocation={setUrlLocation} ></AddGoals>
           ) : urlLocation === "calendar" ? (

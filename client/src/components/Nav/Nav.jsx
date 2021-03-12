@@ -13,10 +13,6 @@ function Nav({ urlLocation, setUrlLocation }) {
   const refTwo = useRef();
   const refThree = useRef();
   useEffect(() => {
-    console.log(refOne);
-    console.log(refTwo);
-    console.log(refThree);
-
     // gsap.to(`.${CSS.locationHelper}`, { duration: 1, x: refTwo.current.offsetLeft });
   }, []);
 

@@ -5,7 +5,7 @@ import "../../App.css";
 import Form from "../../components/Form/Form";
 
 function AddGoal({setUrlLocation}) {
-  const [goalErr, setGoalErr] = useState({ tag: false, title: false });
+  const [goalErr, setGoalErr] = useState({ tag: false, title: false, publishable: false });
   return (
     <div className={`${CSS.darkBorder}`}>
       {goalErr.tag === true ? (
@@ -35,9 +35,9 @@ function AddGoal({setUrlLocation}) {
       {/* <div>Please write down a title for your goal</div> */}
       <div className={`${CSS.newGoalContainer}`}>
         <div className={`flexColumn ${CSS.creationCon}`}>
-          <h1 className={`alignCenter ${CSS.hint}`}>Goal Creation</h1>
+          <h1 className={`alignCenter ${CSS.hint} ${goalErr.publishable ? CSS.finished: ""}`}>Goal Creation</h1>
           <div className={`${CSS.tagChoice}`}>
-            <Form setGoalErr={setGoalErr} setUrlLocation={setUrlLocation}></Form>
+            <Form goalErr={goalErr} setGoalErr={setGoalErr} setUrlLocation={setUrlLocation}></Form>
           </div>
         </div>
       </div>

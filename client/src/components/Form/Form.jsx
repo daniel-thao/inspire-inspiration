@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import dayJS from "dayjs";
@@ -19,6 +19,7 @@ function Form({ setGoalErr, ...props }) {
 
   async function makeGoal(e) {
     const findUser = await axios.put("/api/users/findOne", user).then((res) => res);
+    // console.log(findUser);
     const newGoal = await axios
       .post("/api/goals/create", {
         findUser,
@@ -30,7 +31,16 @@ function Form({ setGoalErr, ...props }) {
       .catch(function (error) {
         console.log(error);
       });
+    return;
   }
+
+  useEffect(() => {
+    if (title !== "" && selectValue !== "category") {
+      setGoalErr({ tag: false, title: false, publishable: true });
+    } else {
+      setGoalErr({ tag: false, title: false, publishable: false });
+    }
+  }, [title, selectValue]);
 
   return (
     <>
@@ -43,8 +53,10 @@ function Form({ setGoalErr, ...props }) {
           e.preventDefault();
           switch (e.nativeEvent.submitter.value) {
             case "Create":
-              if (e.target[0].value === "") return setGoalErr({ tag: true, title: false });
-              else if (e.target[1].value === "") return setGoalErr({ tag: false, title: true });
+              if (e.target[0].value === "category")
+                return setGoalErr({ tag: true, title: false, publishable: false });
+              else if (e.target[1].value === "")
+                return setGoalErr({ tag: false, title: true, publishable: false });
               else {
                 makeGoal(e);
                 /* 
@@ -67,7 +79,7 @@ function Form({ setGoalErr, ...props }) {
               setSelectValue(e.target.value);
             }}
           >
-            <option className={`${CSS.optionCentered}`} value="" defaultValue>
+            <option className={`${CSS.optionCentered}`} value="category" defaultValue>
               Choose A Category
             </option>
             <option value="fitness">Fitness</option>
@@ -98,7 +110,11 @@ function Form({ setGoalErr, ...props }) {
           className={`${CSS.textBoxes} ${description !== "" ? CSS.userTyped : ""}`}
         ></input>
         <div className={`alignCenter flexRow justifyAround insideMaxWidth`}>
-          <input type="submit" value="Create" className={`${CSS.submitBtn}`} />
+          <input
+            type="submit"
+            value="Create"
+            className={`${CSS.submitBtn} ${props.goalErr.publishable ? CSS.finished : ""}`}
+          />
           <input type="submit" value="Cancel" className={`${CSS.submitBtn}`} />
         </div>
       </form>

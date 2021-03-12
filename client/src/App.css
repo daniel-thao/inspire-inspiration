@@ -11,7 +11,7 @@
 }
 
 .scrollHidden {
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 /* 
@@ -43,4 +43,12 @@
 
 .alignCenter {
   align-self: center;
+}
+
+.positionRelative {
+  position: relative;
+}
+
+.positionCenter {
+  top: 1.2em;
 }

@@ -12,7 +12,7 @@ router.put("/exists", (req, res) => {
     if (user) {
       return res.send("User already exists");
     } else {
-      res.send("created");
+      res.send("newUser");
     }
   });
 });

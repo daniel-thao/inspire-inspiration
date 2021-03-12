@@ -13,7 +13,7 @@ function Video() {
         src="https://www.youtube.com/embed/DnS3vDtOkbs?start=48&autoplay=1&playsinline=1"
         controls="controls"
         allow="autoplay"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
 
       {/* <iframe

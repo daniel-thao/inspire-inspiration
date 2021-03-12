@@ -125,6 +125,10 @@
   margin-top: 1em;
 }
 
+.finished{
+  background-color: khaki;
+}
+
 .cancelBtn {
   width: fit-content;
   font-size: 1.25em;

@@ -7,13 +7,15 @@ import gsap from "gsap";
 import CSS from "./cg.module.css";
 
 import Goal from "../../components/Goal/Goal";
-import ScrollContext from "../../contexts/ScrollContext";
+import MediaQueryContext from "../../contexts/MediaQueryContext";
 
-function CurrentGoals() {
+function CurrentGoals({ urlLocation }) {
   const { user } = useAuth0();
   const [goals, setGoals] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [whichDescription, setWhichDescription] = useState("");
+  const { mediaQuery, setMediaQuery } = useContext(MediaQueryContext);
+  const [today, setToday] = useState(dayJS().format("MM/DD/YYYY"));
 
   async function checkAndPopulate() {
     const check = await axios
@@ -25,7 +27,9 @@ function CurrentGoals() {
         console.log(error);
       });
 
-    if (check.data === null) {
+    // console.log(check);
+
+    if (check.data === "newUser") {
       return await axios.post("/api/users/register", user).catch((error) => console.log(error));
     } else {
       const userData = await axios
@@ -33,24 +37,27 @@ function CurrentGoals() {
         .then((res) => res)
         .catch((error) => console.log(error));
 
-      const currentGoals = [];
-      // Then we will loop through all of the goals of the user
-      for (let i = 0; i < userData.data.goals.length; i++) {
+      // console.log(userData.data.goals);
+
+      if (userData.data !== null) {
+        // Then we will loop through all of the goals of the user
+
         // Then we are going to push the results of a fetch request into our new array above
         // This fetch request is checking to see if the date key of all goals matches the moment date for today
-        currentGoals.push(
-          await axios.get(`/api/goals/findOne/${userData.data.goals[i]}`).then((res) => res.data)
-        );
+        const currentGoals = await axios
+          .put(`/api/goals/findAllViaDate/`, { date: userData.data.goals.createdOn })
+          .then((res) => res.data);
 
-        Promise.all(currentGoals).then(function (updateState) {
-          setGoals(updateState);
-        });
+        // console.log(currentGoals);
+
+        setGoals(currentGoals);
       }
     }
   }
 
   useEffect(() => {
     // Check if user & create user & populate their goals
+    // console.log(goals);
     checkAndPopulate();
   }, []);
 
@@ -84,19 +91,24 @@ function CurrentGoals() {
         <div className={`${whichDescription !== "" ? whichDescription : ""}`}>
           {whichDescription}
         </div>
-        {goals.map((index) => (
-          <Goal
-            key={index[0].systemDate}
-            iden="homeGoalPopulate"
-            title={index[0].title}
-            isChecked={index[0].checked}
-            tag={index[0].tag}
-            description={index[0].description}
-            setWhichDescription={setWhichDescription}
-          ></Goal>
-        ))}
+        {goals.length > 0 ? (
+          goals.map((index) => (
+            <Goal
+              key={index.systemDate}
+              iden="homeGoalPopulate"
+              title={index.title}
+              isChecked={index.checked}
+              tag={index.tag}
+              description={index.description}
+              setWhichDescription={setWhichDescription}
+            ></Goal>
+          ))
+        ) : (
+          <></>
+        )}
         <div className={CSS.extraPadding}></div>
       </div>
+      {mediaQuery > 414 ? <div className={CSS.extraSpace}></div> : <></>}
       {/* <div className={CSS.extraSpace}></div> */}
     </div>
   );
