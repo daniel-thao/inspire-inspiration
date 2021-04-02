@@ -101,6 +101,7 @@ function CurrentGoals({ urlLocation }) {
               tag={index.tag}
               description={index.description}
               setWhichDescription={setWhichDescription}
+              id={index._id}
             ></Goal>
           ))
         ) : (

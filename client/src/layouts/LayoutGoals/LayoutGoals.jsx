@@ -26,7 +26,7 @@ function LayoutGoals() {
   const {mediaQuery} = useContext(MediaQueryContext);
 
   return (
-    <div className={`maxWidth flexColumn positionRelative positionCenter justifyCenter scrollHidden`}>
+    <div className={`maxWidth flexColumn positionRelative justifyCenter scrollHidden`}>
       <div className={`${CSS.boundrary}`}>
         <Video></Video>
         <div className={CSS.container}>

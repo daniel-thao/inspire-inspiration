@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import axios from "axios";
 import gsap from "gsap";
 import CSS from "./goal.module.css";
 
@@ -9,12 +10,13 @@ import { faSquare } from "@fortawesome/free-regular-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function checkOff(checked, setChecked) {
+function checkOff(checked, setChecked, props) {
   if (checked) {
-    // console.log(checked);
+    // change the checked status in the DB to match what the user sees
+    axios.put(`/api/goals/checked/`, { id: props.id, checked: false });
     setChecked(false);
   } else {
-    // console.log(checked);
+    axios.put(`/api/goals/checked/`, { id: props.id, checked: true });
     setChecked(true);
   }
 }
@@ -43,15 +45,15 @@ function Goal({ ...props }) {
       }`}
       onClick={() => {
         props.setWhichDescription(props.description);
-        console.log("djskald")
+        console.log("djskald");
       }}
     >
       <h6 className={`${CSS.goalTitle}`}>{props.title ? props.title : ""}</h6>
       <FontAwesomeIcon
         className={`${CSS.checkBtn}`}
         icon={checked ? faCheckSquare : faSquare}
-        onClick={() => {
-          checkOff(checked, setChecked);
+        onClick={(e) => {
+          checkOff(checked, setChecked, props);
         }}
       ></FontAwesomeIcon>
     </div>
