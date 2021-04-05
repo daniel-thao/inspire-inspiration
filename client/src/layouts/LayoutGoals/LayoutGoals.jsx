@@ -35,7 +35,7 @@ function LayoutGoals() {
           ) : urlLocation === "addGoal" ? (
             <AddGoals setUrlLocation={setUrlLocation} ></AddGoals>
           ) : urlLocation === "calendar" ? (
-            <Calendar></Calendar>
+            <Calendar urlLocation={urlLocation} setUrlLocation={setUrlLocation}></Calendar>
           ) : urlLocation === "settings" ? (
             <Settings></Settings>
           ) : (

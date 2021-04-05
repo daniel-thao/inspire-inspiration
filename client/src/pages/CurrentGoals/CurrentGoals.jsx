@@ -9,7 +9,7 @@ import CSS from "./cg.module.css";
 import Goal from "../../components/Goal/Goal";
 import MediaQueryContext from "../../contexts/MediaQueryContext";
 
-function CurrentGoals({ urlLocation }) {
+function CurrentGoals(props) {
   const { user } = useAuth0();
   const [goals, setGoals] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -17,7 +17,7 @@ function CurrentGoals({ urlLocation }) {
   const { mediaQuery, setMediaQuery } = useContext(MediaQueryContext);
   const [today, setToday] = useState(dayJS().format("MM/DD/YYYY"));
 
-  async function checkAndPopulate() {
+  async function checkAndPopulate(user) {
     const check = await axios
       .put("/api/users/exists", user)
       .then(function (response) {
@@ -30,7 +30,9 @@ function CurrentGoals({ urlLocation }) {
     // console.log(check);
 
     if (check.data === "newUser") {
-      return await axios.post("/api/users/register", user).catch((error) => console.log(error));
+      return await axios
+        .post("/api/users/register", user)
+        .catch((error) => console.log(error));
     } else {
       const userData = await axios
         .put("/api/users/findOne", user)
@@ -42,13 +44,17 @@ function CurrentGoals({ urlLocation }) {
       if (userData.data !== null) {
         // Then we will loop through all of the goals of the user
 
+        // console.log(userData.data.goals);
+
         // Then we are going to push the results of a fetch request into our new array above
         // This fetch request is checking to see if the date key of all goals matches the moment date for today
         const currentGoals = await axios
-          .put(`/api/goals/findAllViaDate/`, { date: userData.data.goals.createdOn })
+          .put(`/api/goals/findAllViaDate/`, {
+            date: props.chosenDate
+              ? dayJS(props.chosenDate).format("MM/DD/YYYY")
+              : today,
+          })
           .then((res) => res.data);
-
-        // console.log(currentGoals);
 
         setGoals(currentGoals);
       }
@@ -56,9 +62,11 @@ function CurrentGoals({ urlLocation }) {
   }
 
   useEffect(() => {
+    console.log(
+      props.chosenDate ? dayJS(props.chosenDate).format("MM/DD/YYYY") : "dsadas"
+    );
     // Check if user & create user & populate their goals
-    // console.log(goals);
-    checkAndPopulate();
+    checkAndPopulate(user);
   }, []);
 
   useEffect(() => {
@@ -85,8 +93,25 @@ function CurrentGoals({ urlLocation }) {
       >
         <div className={`${CSS.introCard}`}>
           <h5 className={`${CSS.userName}`}>Hi {user.name}!</h5>
-          <h4 className={`${CSS.todaysDate}`}>{dayJS().format("MMM DD, YYYY")}</h4>
+          <h4 className={`${CSS.todaysDate}`}>
+            {dayJS(props.chosenDate ? props.chosenDate : today).format(
+              "MMM DD, YYYY"
+            )}
+          </h4>
         </div>
+
+        {props.chosenDate ? (
+          <div
+            onClick={() => {
+              props.setIsWhere("Add Goal On Specfic Date");
+            }}
+          >
+            {" "}
+            Add new goal on this day
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div className={`${whichDescription !== "" ? whichDescription : ""}`}>
           {whichDescription}
@@ -107,8 +132,24 @@ function CurrentGoals({ urlLocation }) {
         ) : (
           <></>
         )}
+
+        {props.chosenDate ? (
+          <div
+            onClick={() => {
+              props.setChosenDate("");
+              props.setIsWhere("ActualCalender");
+              props.setUrlLocation("calendar");
+            }}
+          >
+            {" "}
+            back to Cal
+          </div>
+        ) : (
+          <></>
+        )}
         <div className={CSS.extraPadding}></div>
       </div>
+
       {mediaQuery > 414 ? <div className={CSS.extraSpace}></div> : <></>}
       {/* <div className={CSS.extraSpace}></div> */}
     </div>

@@ -15,7 +15,8 @@ router.get("/findOne/:goalID", (req, res) => {
 });
 
 router.put("/findAllViaDate/", (req, res) => {
-  db.Goals.find({ createdOn: req.body.date })
+  // console.log(req.body.date)
+  db.Goals.find({ date: req.body.date })
     .then(function (dbGoals) {
       // then send all of the information attached to this goal back to the front end.
       // console.log(dbGoals);

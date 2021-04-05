@@ -1,0 +1,21 @@
+.notInMonth {
+  color: gray;
+}
+
+.dateNum {
+}
+
+.dateNum:hover {
+  background-color: rgb(255, 232, 202);
+  cursor: pointer;
+}
+
+.days {
+    width: 100%;
+    /* background: lightgreen; */
+    /* margin: 0.25em 0.5em; */
+    text-align: center;
+    padding: .9em 0em;
+    margin: .1em 0em;
+    border-radius: 10em;
+  }
