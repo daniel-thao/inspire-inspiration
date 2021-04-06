@@ -13,9 +13,7 @@ import AddGoal from "../../pages/AddGoal/AddGoal";
 
 function Calendar({ urlLocation, setUrlLocation }) {
   const [isWhere, setIsWhere] = useState("ActualCalender");
-  const [dates, setDates] = useState([
-    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-  ]);
+  const [dates, setDates] = useState([["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]]);
   const [columns, setColumns] = useState([1, 2, 3, 4, 5, 6]);
   const [uiMonth, setUIMonth] = useState(dayJS().month());
   const [uiYear, setUIYear] = useState(dayJS().month(uiMonth).year());
@@ -49,7 +47,7 @@ function Calendar({ urlLocation, setUrlLocation }) {
           urlLocation={urlLocation}
           setUrlLocation={setUrlLocation}
         ></AddGoal>
-      ) : (
+      ) : isWhere === "Chosen Specific Date" ? (
         <CurrentGoals
           chosenDate={chosenDate}
           setChosenDate={setChosenDate}
@@ -58,6 +56,8 @@ function Calendar({ urlLocation, setUrlLocation }) {
           urlLocation={urlLocation}
           setUrlLocation={setUrlLocation}
         ></CurrentGoals>
+      ) : (
+        <></>
       )}
     </>
   );

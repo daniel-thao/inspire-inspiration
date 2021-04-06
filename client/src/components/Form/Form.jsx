@@ -17,7 +17,7 @@ function Form({ setGoalErr, ...props }) {
   // console.log(dayJS().format("MM/DD/YYYY-hh:mm:ss:SSS"));
   // console.log(dayJS().format("MM/DD/YYYY"));
 
-  async function makeGoal(e) {
+  async function makeGoal(e, calProps) {
     const findUser = await axios.put("/api/users/findOne", user).then((res) => res);
     // console.log(findUser);
     const newGoal = await axios
@@ -26,7 +26,10 @@ function Form({ setGoalErr, ...props }) {
         tag: e.target[0].value,
         title: e.target[1].value,
         description: e.target[2].value,
-        date: dayJS().format("MM/DD/YYYY"),
+        date:
+          calProps !== ""
+            ? dayJS(calProps.chosenDate).format("MM/DD/YYYY")
+            : dayJS().format("MM/DD/YYYY"),
       })
       .catch(function (error) {
         console.log(error);
@@ -53,19 +56,29 @@ function Form({ setGoalErr, ...props }) {
           e.preventDefault();
           switch (e.nativeEvent.submitter.value) {
             case "Create":
+              // Check to see if all necessary inputs are filled with something before submitting
               if (e.target[0].value === "category")
                 return setGoalErr({ tag: true, title: false, publishable: false });
               else if (e.target[1].value === "")
                 return setGoalErr({ tag: false, title: true, publishable: false });
               else {
-                makeGoal(e);
-                /* 
-                Eventually I will need to alter this line of code under here to match potential future feature of adding goals on the calendar, so therefore I will need to pass the urlLocation state into this component as well and because of that I will need to change this ternary. ==> this will need to be reflected in the other return in the Cancel case
-                */
-                return props.setUrlLocation ? props.setUrlLocation("home") : "";
+                // Make the goal
+                makeGoal(e, props.calProps);
+
+                // Ternary If Statement to redirect based on where user came from => Calendar || HomePage
+                return props.calProps !== ""
+                  ? props.calProps.setIsWhere("Chosen Specific Date")
+                  : props.setUrlLocation
+                  ? props.setUrlLocation("home")
+                  : "";
               }
             case "Cancel":
-              return props.setUrlLocation ? props.setUrlLocation("home") : "";
+              // Ternary If Statement to redirect based on where user came from => Calendar || HomePage
+              return props.calProps !== ""
+                ? props.calProps.setIsWhere("Chosen Specific Date")
+                : props.setUrlLocation
+                ? props.setUrlLocation("home")
+                : "";
             default:
               return;
           }

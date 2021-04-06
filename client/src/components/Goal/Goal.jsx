@@ -45,7 +45,6 @@ function Goal({ ...props }) {
       }`}
       onClick={() => {
         props.setWhichDescription(props.description);
-        console.log("djskald");
       }}
     >
       <h6 className={`${CSS.goalTitle}`}>{props.title ? props.title : ""}</h6>

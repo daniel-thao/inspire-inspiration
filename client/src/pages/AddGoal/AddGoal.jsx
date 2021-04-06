@@ -6,6 +6,7 @@ import Form from "../../components/Form/Form";
 
 function AddGoal({setUrlLocation, ...props}) {
   const [goalErr, setGoalErr] = useState({ tag: false, title: false, publishable: false });
+
   return (
     <div className={`${CSS.darkBorder}`}>
       {goalErr.tag === true ? (
@@ -37,7 +38,7 @@ function AddGoal({setUrlLocation, ...props}) {
         <div className={`flexColumn ${CSS.creationCon}`}>
           <h1 className={`alignCenter ${CSS.hint} ${goalErr.publishable ? CSS.finished: ""}`}>Goal Creation</h1>
           <div className={`${CSS.tagChoice}`}>
-            <Form goalErr={goalErr} setGoalErr={setGoalErr} setUrlLocation={setUrlLocation} props={props}></Form>
+            <Form goalErr={goalErr} setGoalErr={setGoalErr} setUrlLocation={setUrlLocation} calProps={props.chosenDate ? props : ""}></Form>
           </div>
         </div>
       </div>

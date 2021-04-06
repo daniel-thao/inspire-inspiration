@@ -14,8 +14,8 @@
 }
 
 .locationHelper {
-  background-color: khaki;
-  /* background-color: rgb(180, 162, 0); */
+  /* background-color: khaki; */
+  background-color: rgb(254, 255, 193);
   height: 80%;
   width: 3em;
   position: absolute;

@@ -51,7 +51,7 @@ function CalendarDay(props) {
           .join("/");
 
           props.setChosenDate(dateClicked)
-          props.setIsWhere(dateClicked)
+          props.setIsWhere("Chosen Specific Date")
 
         // console.log(dateClicked);
       }}

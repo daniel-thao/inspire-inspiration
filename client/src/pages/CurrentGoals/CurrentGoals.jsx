@@ -27,8 +27,6 @@ function CurrentGoals(props) {
         console.log(error);
       });
 
-    // console.log(check);
-
     if (check.data === "newUser") {
       return await axios
         .post("/api/users/register", user)
@@ -39,13 +37,9 @@ function CurrentGoals(props) {
         .then((res) => res)
         .catch((error) => console.log(error));
 
-      // console.log(userData.data.goals);
 
       if (userData.data !== null) {
         // Then we will loop through all of the goals of the user
-
-        // console.log(userData.data.goals);
-
         // Then we are going to push the results of a fetch request into our new array above
         // This fetch request is checking to see if the date key of all goals matches the moment date for today
         const currentGoals = await axios
@@ -62,9 +56,6 @@ function CurrentGoals(props) {
   }
 
   useEffect(() => {
-    console.log(
-      props.chosenDate ? dayJS(props.chosenDate).format("MM/DD/YYYY") : "dsadas"
-    );
     // Check if user & create user & populate their goals
     checkAndPopulate(user);
   }, []);
@@ -105,6 +96,7 @@ function CurrentGoals(props) {
             onClick={() => {
               props.setIsWhere("Add Goal On Specfic Date");
             }}
+            className={`${CSS.cal_addBtn}`}
           >
             {" "}
             Add new goal on this day
@@ -140,9 +132,10 @@ function CurrentGoals(props) {
               props.setIsWhere("ActualCalender");
               props.setUrlLocation("calendar");
             }}
+            className={CSS.cal_backBtn}
           >
             {" "}
-            back to Cal
+            Back to Calendar
           </div>
         ) : (
           <></>
