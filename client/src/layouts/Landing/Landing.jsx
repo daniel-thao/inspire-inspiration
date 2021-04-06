@@ -14,9 +14,13 @@ function Landing() {
     return history.push("/goals");
   } else {
     return (
-      <button className={CSS.loginBtn} onClick={loginWithRedirect}>
-        Log in
-      </button>
+      <div className={CSS.flexColumn}>
+        <button className={CSS.login} onClick={loginWithRedirect}>
+          Log in
+        </button>
+        {/* <div className={CSS.shadow}></div> */}
+
+      </div>
     );
   }
 }
